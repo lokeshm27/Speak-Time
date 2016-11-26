@@ -197,7 +197,7 @@ public class Operations {
 			@Override
 			public void windowClosing(WindowEvent we){
 				if(data.confirm){
-				int res = showConfirmDialog();
+				int res = JOptionPane.showConfirmDialog(null, "Are you sure to exit?\nChanges may not be saved.!", "Confirm Exit.", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if(res == JOptionPane.YES_OPTION){
 						frame.dispose();
 						optionFrame = false;
@@ -270,6 +270,7 @@ public class Operations {
 					if((mins%5 == 0) && (mins >= 1) && (mins <= 55)){
 						temp = new Data(mins, cb1.isSelected(), cb3.isSelected(), cb2.isSelected());
 						data = temp;
+						sync();
 						serial(temp);
 					}else{
 						JOptionPane.showMessageDialog(null,"Invlaid number for minutes.\nPlease try again.", "Error - Speak-Time", JOptionPane.ERROR_MESSAGE);
@@ -279,6 +280,7 @@ public class Operations {
 					if((mins<=5) && (mins>=1)){
 						temp = new Data((mins*60), cb1.isSelected(), cb3.isSelected(), cb2.isSelected());
 						data = temp;
+						sync();
 						serial(temp);
 					}else{
 						JOptionPane.showMessageDialog(null,"Invlaid number for hours.\nPlease try again.", "Error - Speak-Time", JOptionPane.ERROR_MESSAGE);
@@ -289,6 +291,17 @@ public class Operations {
 		
 		
 		JButton cancel = new JButton("Cancel");
+		cancel.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int res = JOptionPane.showConfirmDialog(null, "Are you sure to cancel?\nChanges may not be saved.!", "Confirm Exit", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				if(res == JOptionPane.YES_OPTION){
+					frame.dispose();
+					optionFrame = false;
+				}
+			}
+		});
 		
 		JPanel p1 = new JPanel(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
