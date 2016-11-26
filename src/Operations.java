@@ -49,7 +49,9 @@ public class Operations {
 	private PopupMenu popup;
 	private MenuItem disable;
 	private MenuItem enable;
+	private boolean enabled = true;
 	Data data = new Data();
+	speakThread speak = new speakThread();
 
 	public void initTray() {
 		try {
@@ -217,7 +219,11 @@ public class Operations {
 	}
 
 	public void test() {
-		//// TODO
+		if(enabled){
+			speak.test();
+		}else{
+			showTrayMsg("Can not test audio when Speak-Time is disabled.", "Speak-Time", TrayIcon.MessageType.ERROR);
+		}
 	}
 
 	public void sync() {
