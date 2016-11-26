@@ -196,10 +196,12 @@ public class Operations {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent we){
-				int res = JOptionPane.showConfirmDialog(null, "Are you sure to exit?\nChanges may not be saved.", "Discard Changes?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-				if(res == JOptionPane.YES_OPTION){
-					frame.dispose();
-					optionFrame = false;
+				if(data.confirm){
+				int res = showConfirmDialog();
+					if(res == JOptionPane.YES_OPTION){
+						frame.dispose();
+						optionFrame = false;
+					}
 				}
 			}
 		});
@@ -255,6 +257,37 @@ public class Operations {
 		cb2.setSelected(data.ignore);
 		
 		JButton save = new JButton("Save");
+		save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int mins;
+				Data temp;
+				
+				if(combo.getSelectedIndex() == 0)
+				{
+					mins = (Integer) spinner.getValue();
+					if((mins%5 == 0) && (mins >= 1) && (mins <= 55)){
+						temp = new Data(mins, cb1.isSelected(), cb3.isSelected(), cb2.isSelected());
+						data = temp;
+						serial(temp);
+					}else{
+						JOptionPane.showMessageDialog(null,"Invlaid number for minutes.\nPlease try again.", "Error - Speak-Time", JOptionPane.ERROR_MESSAGE);
+					}
+				}else{
+					mins = (Integer) spinner.getValue();
+					if((mins<=5) && (mins>=1)){
+						temp = new Data((mins*60), cb1.isSelected(), cb3.isSelected(), cb2.isSelected());
+						data = temp;
+						serial(temp);
+					}else{
+						JOptionPane.showMessageDialog(null,"Invlaid number for hours.\nPlease try again.", "Error - Speak-Time", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
+		
+		
 		JButton cancel = new JButton("Cancel");
 		
 		JPanel p1 = new JPanel(new GridBagLayout());
@@ -313,6 +346,10 @@ public class Operations {
 		frame.setResizable(true);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+	}
+	
+	private int showConfirmDialog() {
+		return 0;
 	}
 	
 	public void about(){
