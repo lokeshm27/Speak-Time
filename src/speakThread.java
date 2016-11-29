@@ -11,6 +11,7 @@ public class speakThread extends Thread {
 	private String VOICENAME = "kevin16";
 	private Voice voice;
 	private VoiceManager vm;
+	Data data;
 	
 	@Override
 	public void run() {
@@ -24,7 +25,8 @@ public class speakThread extends Thread {
 		}
 	}
 	
-	speakThread(){
+	speakThread(Data data){
+		this.data = data;
 		vm = VoiceManager.getInstance();
 		voice = vm.getVoice(VOICENAME);
 		voice.allocate();
@@ -35,5 +37,9 @@ public class speakThread extends Thread {
 		Date date = new Date();
 		System.out.println("It's " + date.getHours() + " Hours and " + date.getMinutes() + " Minutes.");
 		voice.speak("It's " + date.getHours() + " Hours and " + date.getMinutes() + " Minutes.");
+	}
+	
+	public void setData(Data data){
+		this.data = data;
 	}
 }

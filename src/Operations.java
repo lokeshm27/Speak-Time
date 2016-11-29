@@ -51,7 +51,7 @@ public class Operations {
 	private MenuItem enable;
 	private boolean enabled = true;
 	Data data = new Data();
-	speakThread speak = new speakThread();
+	speakThread speak = new speakThread(data);
 
 	public void initTray() {
 		try {
@@ -182,6 +182,7 @@ public class Operations {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(dat));
 			oos.writeObject(ip);
+			speak.setData(data);
 		} catch (Exception e) {
 
 		}
@@ -227,7 +228,11 @@ public class Operations {
 	}
 
 	public void sync() {
-		//// TODO
+		if(speak.isAlive()){
+			speak.interrupt();
+		}
+		speak.setData(data);
+		speak.start();
 	}
 
 	public void options() {
