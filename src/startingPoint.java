@@ -14,6 +14,7 @@ public class startingPoint {
 			}
 			op.initTray();
 			op.startServer();
+			op.startOperation();
 		}
 	}
 

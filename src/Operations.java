@@ -205,6 +205,7 @@ public class Operations {
 			serial(new Data());
 		}
 		data = deserial();
+		speak.setData(data);
 	}
 
 	public void disable() {
@@ -228,10 +229,8 @@ public class Operations {
 	}
 
 	public void sync() {
-		if(speak.isAlive()){
-			speak.interrupt();
-		}
-		speak.setData(data);
+		speak.interrupt();
+		speak = new speakThread(data);
 		speak.start();
 	}
 
@@ -599,4 +598,8 @@ public class Operations {
 		}
 	}
 
+	public void startOperation(){
+		speak.start();
+	}
+	
 }
